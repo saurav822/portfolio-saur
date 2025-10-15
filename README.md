@@ -2,7 +2,7 @@
 
 Personal portfolio site for Saurav Rajput, Senior Data Scientist & AI Builder.
 
-**Live at:** [saurav822.github.io/portfolio-saur](https://saurav822.github.io/portfolio-saur)
+**Live at:** [sauravrajput.vercel.app](https://sauravrajput.vercel.app)
 
 ## Stack
 
