@@ -97,13 +97,44 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: var(--font-m);
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.06em;
+      font-family: var(--font-h);
       cursor: pointer;
       user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      line-height: 1.2;
+    }
+    .nl-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      display: flex;
+    }
+    .nl-role {
+      font-family: var(--font-m);
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      animation: heroFadeDown 0.6s ease 0.8s forwards;
+    }
+    .nav-logo .nl-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(-8px);
+      animation: nlDrop 0.4s ease forwards;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: letter-spacing 0.3s ease;
+    }
+    .nav-logo:hover .nl-char {
+      letter-spacing: 0.04em;
+    }
+    @keyframes nlDrop {
+      to { opacity: 1; transform: translateY(0); }
     }
     .nav-links {
       display: flex;
@@ -220,6 +251,16 @@
       margin-bottom: 1.5rem;
       opacity: 0;
       animation: heroFadeDown 0.8s ease 0.3s forwards;
+    }
+    .hero-name {
+      font-family: var(--font-h);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: heroFadeDown 0.8s ease 0.4s forwards;
     }
     .hero-h1 {
       font-family: var(--font-h);
@@ -918,7 +959,10 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">SR</div>
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="nl-name"><span class="nl-char" style="animation-delay:0.05s">S</span><span class="nl-char" style="animation-delay:0.10s">a</span><span class="nl-char" style="animation-delay:0.15s">u</span><span class="nl-char" style="animation-delay:0.20s">r</span><span class="nl-char" style="animation-delay:0.25s">a</span><span class="nl-char" style="animation-delay:0.30s">v</span><span class="nl-char" style="animation-delay:0.37s">&nbsp;</span><span class="nl-char" style="animation-delay:0.42s">R</span><span class="nl-char" style="animation-delay:0.47s">a</span><span class="nl-char" style="animation-delay:0.52s">j</span><span class="nl-char" style="animation-delay:0.57s">p</span><span class="nl-char" style="animation-delay:0.62s">u</span><span class="nl-char" style="animation-delay:0.67s">t</span></div>
+    <div class="nl-role">Senior Data Scientist &middot; AI Builder</div>
+  </div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
@@ -945,10 +989,8 @@
   <div class="hero-inner">
 
     <div class="hero-left">
-      <p class="hero-eyebrow">// VibeCon India 2026 &middot; Builder Profile</p>
       <h1 class="hero-h1">
-        <span class="line1">I Build Things</span>
-        <span class="grad-text">That Actually Work.</span>
+        <span class="grad-text">I Build Things That Actually Work.</span>
       </h1>
       <div class="typewriter-wrap" aria-live="polite">
         <span class="tw-text" id="tw"></span><span class="cursor-blink" aria-hidden="true"></span>
@@ -1191,21 +1233,24 @@
       <span class="logo-pill fade-up d3">Walmart</span>
       <span class="logo-pill fade-up d4">BCG</span>
       <span class="logo-pill fade-up d5">eBay</span>
-      <span class="logo-pill fade-up d6">Govt. of India</span>
     </div>
 
     <div class="impact-row">
       <div class="impact-item fade-up d1">
-        <div class="impact-num" data-target="9" data-suffix="x">0x</div>
-        <div class="impact-desc">Lead Conversion Lift at BCG</div>
+        <div class="impact-num" data-target="20" data-suffix="M$">0M$</div>
+        <div class="impact-desc">Revenue Lift at Walmart</div>
       </div>
       <div class="impact-item fade-up d2">
-        <div class="impact-num" data-target="30" data-suffix="%">0%</div>
-        <div class="impact-desc">Model Performance Improvement</div>
+        <div class="impact-num" data-target="9" data-suffix="x">0x</div>
+        <div class="impact-desc">Lead Conversion Lift at BCG</div>
       </div>
       <div class="impact-item fade-up d3">
         <div class="impact-num" data-target="21" data-suffix="%">0%</div>
         <div class="impact-desc">Detection Rate Increase at eBay</div>
+      </div>
+      <div class="impact-item fade-up d4">
+        <div class="impact-num" style="font-size:clamp(2rem,4vw,3.5rem);">PM ✓</div>
+        <div class="impact-desc">Validated Agriculture Solution for Govt. of India</div>
       </div>
     </div>
   </div>
@@ -1238,15 +1283,21 @@
       </div>
 
       <div class="tl-item fade-up d3">
-        <p class="tl-year">2020 &mdash; IIM Calcutta</p>
+        <p class="tl-year">2020 &mdash; IIM Calcutta [with IIT KGP + ISI Kolkata]</p>
         <h3 class="tl-title">All In on Data</h3>
-        <p class="tl-body">IIM Calcutta (with IIT KGP + ISI Kolkata). Ranked 3rd in batch. Top 126 globally in the International Data Analytics Olympiad. Chose data over everything.</p>
+        <p class="tl-body">Ranked 3rd in batch. Top 126 globally in the International Data Analytics Olympiad. Chose data over everything.</p>
       </div>
 
       <div class="tl-item fade-up d4">
-        <p class="tl-year">2022 &mdash; Now</p>
-        <h3 class="tl-title">BCG &rarr; Walmart</h3>
-        <p class="tl-body">BCG → Walmart. From national policy (NITI Aayog, Prime Minister validation) to personalization at e-commerce scale. Now building autonomously with AI.</p>
+        <p class="tl-year">2022 &mdash; BCG</p>
+        <h3 class="tl-title">Consulting at Scale</h3>
+        <p class="tl-body">From credit risk to national policy — NITI Aayog, Prime Minister validation on Agriculture solution. Delivered AI at BCG.</p>
+      </div>
+
+      <div class="tl-item fade-up d5">
+        <p class="tl-year">2024 &mdash; Walmart</p>
+        <h3 class="tl-title">Personalization at e-Commerce Scale</h3>
+        <p class="tl-body">From consulting to product. Building AI systems for personalization and discovery at Walmart scale. Now building autonomously with AI.</p>
       </div>
     </div>
   </div>
@@ -1267,9 +1318,6 @@
       <h3 class="proj-title">End-to-End Event Creation Agent</h3>
       <span class="proj-badge">@ Walmart</span>
       <p class="proj-desc">An AI agent that takes a single brief about a shopping event and autonomously handles item curation, assortment sorting, and screen generation — building complete e-commerce experiences end to end.</p>
-      <div class="chip-row">
-        <span class="chip chip-patent">🏆 Patent Filed</span>
-      </div>
       <div class="tech-row">
         <span class="tech-tag">Python</span>
         <span class="tech-tag">LLM Agents</span>
@@ -1297,7 +1345,7 @@
     <!-- Project 3 -->
     <div class="proj-card odd fade-left">
       <div class="proj-type">[CIVIC TECH]</div>
-      <h3 class="proj-title">CharaGram — Multilingual Civic Platform</h3>
+      <h3 class="proj-title">Charchagram — Multilingual Civic Platform</h3>
       <span class="proj-badge">Vibe-Coded &middot; Solo Build &middot; Live</span>
       <p class="proj-desc">A civic accountability platform giving citizens a structured space to raise local concerns and hold elected representatives accountable — anchored to their constituency. Built solo using AI-assisted coding.</p>
       <div class="chip-row">
@@ -1335,9 +1383,9 @@
         <span class="tech-tag">Python</span>
         <span class="tech-tag">Broker API</span>
       </div>
-      <a href="https://github.com/saurav822" target="_blank" rel="noopener noreferrer" class="proj-link">
+      <a href="https://github.com/saurav822/autotrading" target="_blank" rel="noopener noreferrer" class="proj-link">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        github.com/saurav822
+        github.com/saurav822/autotrading
       </a>
     </div>
 
@@ -1364,9 +1412,9 @@
      ============================================= -->
 <section id="lab">
   <div class="lab-inner">
-    <p class="sect-label fade-up">More From The Lab</p>
-    <h2 class="sect-heading fade-up d1">Supporting Work</h2>
-    <p class="sect-sub fade-up d2">// the projects that didn't make the front page, but shaped the thinking</p>
+    <p class="sect-label fade-up">Also From The Lab</p>
+    <h2 class="sect-heading fade-up d1">More Builds Worth Knowing</h2>
+    <p class="sect-sub fade-up d2">// not ranked — just real work that went deep</p>
 
     <div class="lab-grid">
       <div class="lab-card fade-up d1">
@@ -1484,7 +1532,7 @@
     </div>
 
     <div class="skills-quote fade-up d2">
-      <p>"I don't just build models. I ship products that change conversion rates, inform national policy, and hold governments accountable."</p>
+      <p>"I think like an engineer, move like a founder, and build across domains — from e-commerce at scale to public sector to fintech. The model is never the product. The outcome is."</p>
     </div>
   </div>
 </section>
@@ -1495,7 +1543,6 @@
 <section id="contact">
   <div class="contact-inner">
     <h2 class="contact-h fade-up">Let's Build Something</h2>
-    <p class="contact-sub fade-up d1">VibeCon India 2026 &middot; April 16&ndash;17 &middot; Bangalore</p>
 
     <div class="contact-cards">
       <a href="mailto:nba.saurav@gmail.com" class="contact-card fade-up d1">
