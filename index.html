@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saurav Rajput — Senior Data Scientist & AI Builder</title>
+  <meta name="description" content="Senior Data Scientist & AI Builder. IIT Delhi · IIM Calcutta · Walmart · BCG. Building AI products that actually ship.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* =============================================
+       DESIGN SYSTEM
+       ============================================= */
+    :root {
+      --bg:           #0a0a0f;
+      --surface:      #12121a;
+      --surface-2:    #1a1a24;
+      --accent:       #6C63FF;
+      --accent2:      #00D4AA;
+      --text:         #F0F0F5;
+      --muted:        #8888AA;
+      --border:       rgba(255,255,255,0.07);
+      --glow-v:       rgba(108,99,255,0.18);
+      --glow-t:       rgba(0,212,170,0.18);
+      --gradient:     linear-gradient(135deg, #6C63FF, #00D4AA);
+      --font-h:       'Space Grotesk', sans-serif;
+      --font-b:       'Inter', sans-serif;
+      --font-m:       'JetBrains Mono', monospace;
+      --r:            12px;
+      --r-sm:         6px;
+      --ease:         0.3s ease;
+    }
+
+    /* =============================================
+       RESET
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================
+       SCROLL ANIMATION CLASSES
+       ============================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-left {
+      opacity: 0;
+      transform: translateX(-70px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-right {
+      opacity: 0;
+      transform: translateX(70px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible,
+    .fade-left.visible,
+    .fade-right.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+    .d5 { transition-delay: 0.5s; }
+    .d6 { transition-delay: 0.6s; }
+
+    /* =============================================
+       NAV
+       ============================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background var(--ease), backdrop-filter var(--ease), border-bottom var(--ease);
+    }
+    nav.scrolled {
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-m);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      transition: color var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile overlay menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,15,0.97);
+      z-index: 199;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-h);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--ease);
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* =============================================
+       HERO
+       ============================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -15%;
+      width: 70%;
+      height: 80%;
+      background: radial-gradient(ellipse, rgba(108,99,255,0.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 55%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(0,212,170,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-left { flex: 0 0 58%; }
+    .hero-right {
+      flex: 0 0 42%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-m);
+      font-size: 0.75rem;
+      color: var(--accent2);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: heroFadeDown 0.8s ease 0.3s forwards;
+    }
+    .hero-h1 {
+      font-family: var(--font-h);
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: heroFadeDown 0.8s ease 0.5s forwards;
+    }
+    .hero-h1 .line1 { display: block; color: var(--text); }
+    .hero-h1 .grad-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .typewriter-wrap {
+      font-family: var(--font-m);
+      font-size: clamp(0.85rem, 1.4vw, 1rem);
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      min-height: 1.8em;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      animation: heroFadeDown 0.8s ease 0.7s forwards;
+    }
+    .tw-text { color: var(--accent2); }
+    .cursor-blink {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blinkAnim 1s step-end infinite;
+    }
+    @keyframes blinkAnim { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: heroFadeDown 0.8s ease 0.9s forwards;
+    }
+    .btn-pri {
+      padding: 0.875rem 2.25rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--r-sm);
+      font-family: var(--font-h);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 24px var(--glow-v);
+      transition: background var(--ease), box-shadow var(--ease), transform var(--ease);
+      display: inline-block;
+      text-align: center;
+    }
+    .btn-pri:hover {
+      background: #7b72ff;
+      box-shadow: 0 0 36px rgba(108,99,255,0.45);
+      transform: translateY(-2px);
+    }
+    .btn-sec {
+      padding: 0.875rem 2.25rem;
+      background: transparent;
+      color: var(--text);
+      border-radius: var(--r-sm);
+      font-family: var(--font-h);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color var(--ease), color var(--ease), transform var(--ease);
+      display: inline-block;
+      text-align: center;
+    }
+    .btn-sec:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* scroll indicator */
+    .scroll-ind {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: heroFadeDown 0.8s ease 1.3s forwards;
+    }
+    .scroll-ind span {
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+    }
+    .scroll-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: dotBounce 2s ease-in-out infinite;
+    }
+    @keyframes dotBounce {
+      0%,100%{transform:translateY(0);opacity:1}
+      50%{transform:translateY(10px);opacity:0.35}
+    }
+    @keyframes heroFadeDown {
+      from{opacity:0;transform:translateY(-18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    /* =============================================
+       NEURAL NETWORK SVG (hero-right)
+       ============================================= */
+    .nn-wrap {
+      width: 100%;
+      max-width: 420px;
+      opacity: 0;
+      animation: nnEntrance 1.1s ease 0.9s forwards;
+    }
+    @keyframes nnEntrance {
+      from{opacity:0;transform:translateY(28px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .nn-wrap svg { width: 100%; height: auto; }
+
+    /* =============================================
+       CREDIBILITY STRIP
+       ============================================= */
+    #credibility {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5.5rem 2rem;
+    }
+    .cred-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .sect-label {
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 2.75rem;
+    }
+    .logo-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      justify-content: center;
+      margin-bottom: 4.5rem;
+    }
+    .logo-pill {
+      padding: 0.55rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: var(--font-m);
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: all var(--ease);
+      cursor: default;
+      background: var(--bg);
+    }
+    .logo-pill:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      box-shadow: 0 0 14px var(--glow-v);
+    }
+    .impact-row {
+      display: flex;
+      gap: 4rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .impact-item { text-align: center; }
+    .impact-num {
+      font-family: var(--font-h);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+    .impact-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 140px;
+      margin: 0 auto;
+      line-height: 1.45;
+    }
+
+    /* =============================================
+       ABOUT / TIMELINE
+       ============================================= */
+    #about { padding: 9rem 2rem; }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .sect-heading {
+      font-family: var(--font-h);
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+    .sect-sub {
+      font-family: var(--font-m);
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4rem;
+    }
+
+    /* timeline */
+    .timeline-outer {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .timeline-track {
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .timeline-fill {
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      transition: height 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 2px;
+    }
+    .timeline-fill.visible { height: 100%; }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+    }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2.5rem;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      z-index: 2;
+      transition: border-color var(--ease), box-shadow var(--ease);
+    }
+    .tl-item:nth-child(even)::before { border-color: var(--accent2); }
+    .tl-item:hover::before {
+      box-shadow: 0 0 0 4px rgba(108,99,255,0.2);
+    }
+    .tl-year {
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.35rem;
+    }
+    .tl-item:nth-child(even) .tl-year { color: var(--accent2); }
+    .tl-title {
+      font-family: var(--font-h);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .tl-body {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 620px;
+    }
+
+    /* =============================================
+       WORK — BUILD LOG
+       ============================================= */
+    #work {
+      padding: 9rem 2rem;
+      background: var(--surface);
+    }
+    .work-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+    .proj-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 2.25rem 2.5rem;
+      min-height: 280px;
+      margin-bottom: 2rem;
+      transition: border-color var(--ease), box-shadow var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .proj-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0%;
+      background: var(--gradient);
+      transition: height 0.4s ease;
+      border-radius: 0 0 3px 3px;
+    }
+    .proj-card:hover::before { height: 100%; }
+    .proj-card:hover {
+      border-color: rgba(108,99,255,0.25);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 40px rgba(108,99,255,0.06);
+    }
+    @media (min-width: 768px) {
+      .proj-card.odd { margin-right: 9%; }
+      .proj-card.even { margin-left: 9%; }
+    }
+    .proj-type {
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.85rem;
+    }
+    .proj-title {
+      font-family: var(--font-h);
+      font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    .proj-badge {
+      display: inline-block;
+      padding: 0.2rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .proj-desc {
+      font-size: 0.91rem;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-bottom: 1.5rem;
+      max-width: 680px;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+    .chip {
+      padding: 0.22rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-family: var(--font-m);
+      line-height: 1.6;
+    }
+    .chip-impact { background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.3); color: var(--accent); }
+    .chip-live   { background: rgba(0,212,170,0.12);  border: 1px solid rgba(0,212,170,0.3);  color: var(--accent2); }
+    .chip-patent { background: rgba(255,196,57,0.1);  border: 1px solid rgba(255,196,57,0.3);  color: #ffcb39; }
+    .chip-multi  { background: rgba(255,90,140,0.1);  border: 1px solid rgba(255,90,140,0.3);  color: #ff5a8c; }
+    .chip-vibe   { background: rgba(0,212,170,0.08);  border: 1px solid rgba(0,212,170,0.2);   color: var(--accent2); }
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+    .tech-tag {
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: var(--surface);
+      padding: 0.18rem 0.6rem;
+      border-radius: 4px;
+    }
+    .proj-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-m);
+      font-size: 0.76rem;
+      color: var(--accent2);
+      margin-right: 1.25rem;
+      transition: color var(--ease);
+    }
+    .proj-link:hover { color: var(--text); }
+    .proj-link svg { flex-shrink: 0; }
+
+    /* =============================================
+       LAB — SUPPORTING WORK
+       ============================================= */
+    #lab { padding: 9rem 2rem; }
+    .lab-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .lab-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.6rem;
+      transition: border-color var(--ease), transform var(--ease), box-shadow var(--ease);
+    }
+    .lab-card:hover {
+      border-color: rgba(108,99,255,0.22);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    .lab-title {
+      font-family: var(--font-h);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.55rem;
+    }
+    .lab-desc {
+      font-size: 0.855rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .lab-tag {
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      color: var(--accent);
+    }
+
+    /* =============================================
+       SKILLS
+       ============================================= */
+    #skills {
+      padding: 9rem 2rem;
+      background: var(--surface);
+    }
+    .skills-inner { max-width: 1100px; margin: 0 auto; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      margin-bottom: 4rem;
+    }
+    .skills-col-label {
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2.25rem;
+    }
+    .skill-item { margin-bottom: 1.6rem; }
+    .skill-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.55rem;
+    }
+    .skill-name { font-size: 0.88rem; color: var(--text); }
+    .skill-pct {
+      font-family: var(--font-m);
+      font-size: 0.76rem;
+      color: var(--accent);
+    }
+    .bar-bg {
+      height: 3px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tools-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .tool-pill {
+      padding: 0.38rem 0.95rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: var(--font-m);
+      font-size: 0.75rem;
+      color: var(--muted);
+      transition: all var(--ease);
+    }
+    .tool-pill:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      box-shadow: 0 0 10px var(--glow-v);
+    }
+
+    .skills-quote {
+      border-left: 2px solid var(--accent);
+      padding: 1.5rem 2rem;
+      background: var(--bg);
+      border-radius: 0 var(--r) var(--r) 0;
+    }
+    .skills-quote p {
+      font-family: var(--font-h);
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    /* =============================================
+       CONTACT
+       ============================================= */
+    #contact {
+      padding: 9rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(108,99,255,0.06), rgba(0,212,170,0.06));
+      pointer-events: none;
+    }
+    .contact-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .contact-h {
+      font-family: var(--font-h);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .contact-sub {
+      font-family: var(--font-m);
+      font-size: 0.88rem;
+      color: var(--accent2);
+      letter-spacing: 0.06em;
+      margin-bottom: 3.5rem;
+    }
+    .contact-cards {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .contact-card {
+      padding: 1.75rem 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      flex: 1;
+      min-width: 200px;
+      max-width: 256px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+      text-align: center;
+      transition: all var(--ease);
+    }
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(108,99,255,0.12);
+    }
+    .contact-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+    .contact-type {
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .contact-val {
+      font-size: 0.82rem;
+      color: var(--text);
+      word-break: break-all;
+    }
+    .contact-note {
+      font-family: var(--font-m);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    footer {
+      padding: 1.5rem 2rem;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    footer span {
+      font-family: var(--font-m);
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    /* =============================================
+       RESPONSIVE
+       ============================================= */
+    @media (max-width: 900px) {
+      .skills-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      #hero { padding: 5.5rem 1.25rem 3rem; }
+      .hero-inner { flex-direction: column; gap: 2.5rem; align-items: flex-start; }
+      .hero-left, .hero-right { flex: none; width: 100%; }
+      .hero-right { order: -1; }
+      .nn-wrap { max-width: 280px; margin: 0 auto; }
+
+      #credibility { padding: 4rem 1.25rem; }
+      .impact-row { gap: 2rem; }
+
+      #about, #work, #lab, #skills, #contact { padding: 6rem 1.25rem; }
+
+      .proj-card { padding: 1.5rem; }
+
+      .contact-card { min-width: 170px; }
+
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; }
+      .btn-pri, .btn-sec { width: 100%; text-align: center; }
+      .contact-cards { flex-direction: column; align-items: center; }
+      .contact-card { max-width: 100%; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">SR</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Build</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hbg" aria-label="Toggle menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mob-menu" role="dialog" aria-label="Navigation">
+  <a href="#about"   onclick="closeMenu()">About</a>
+  <a href="#work"    onclick="closeMenu()">Work</a>
+  <a href="#skills"  onclick="closeMenu()">Build</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- =============================================
+     HERO
+     ============================================= -->
+<section id="hero">
+  <div class="hero-inner">
+
+    <div class="hero-left">
+      <p class="hero-eyebrow">// VibeCon India 2026 &middot; Builder Profile</p>
+      <h1 class="hero-h1">
+        <span class="line1">I Build Things</span>
+        <span class="grad-text">That Actually Work.</span>
+      </h1>
+      <div class="typewriter-wrap" aria-live="polite">
+        <span class="tw-text" id="tw"></span><span class="cursor-blink" aria-hidden="true"></span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#work" class="btn-pri">See My Work</a>
+        <a href="https://github.com/saurav822" target="_blank" rel="noopener noreferrer" class="btn-sec">View GitHub</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- Animated Neural Network -->
+      <div class="nn-wrap" aria-hidden="true">
+        <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <defs>
+            <radialGradient id="gv" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#6C63FF" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#6C63FF" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="gt" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00D4AA" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#00D4AA" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#6C63FF" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#00D4AA" stop-opacity="0.45"/>
+            </linearGradient>
+            <!-- animated particle paths -->
+            <path id="p01" d="M55,90 L155,65"/>
+            <path id="p02" d="M55,160 L155,130"/>
+            <path id="p03" d="M55,230 L155,195"/>
+            <path id="p04" d="M155,65  L255,110"/>
+            <path id="p05" d="M155,130 L255,175"/>
+            <path id="p06" d="M155,195 L255,240"/>
+            <path id="p07" d="M255,110 L360,175"/>
+            <path id="p08" d="M255,175 L360,175"/>
+            <path id="p09" d="M255,240 L360,175"/>
+            <path id="p10" d="M55,90 L155,195"/>
+            <path id="p11" d="M55,230 L155,65"/>
+            <path id="p12" d="M155,65  L255,240"/>
+          </defs>
+
+          <!-- ambient glows -->
+          <ellipse cx="155" cy="150" rx="78" ry="130" fill="rgba(108,99,255,0.025)"/>
+          <ellipse cx="255" cy="165" rx="65" ry="105" fill="rgba(0,212,170,0.025)"/>
+
+          <!-- ── connections: input → hidden-1 ── -->
+          <line x1="55" y1="90"  x2="155" y2="65"  stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.18"/>
+          <line x1="55" y1="90"  x2="155" y2="130" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.22"/>
+          <line x1="55" y1="90"  x2="155" y2="195" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.12"/>
+          <line x1="55" y1="90"  x2="155" y2="258" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.08"/>
+          <line x1="55" y1="160" x2="155" y2="65"  stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.10"/>
+          <line x1="55" y1="160" x2="155" y2="130" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.25"/>
+          <line x1="55" y1="160" x2="155" y2="195" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.25"/>
+          <line x1="55" y1="160" x2="155" y2="258" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.10"/>
+          <line x1="55" y1="230" x2="155" y2="65"  stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.08"/>
+          <line x1="55" y1="230" x2="155" y2="130" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.12"/>
+          <line x1="55" y1="230" x2="155" y2="195" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.20"/>
+          <line x1="55" y1="230" x2="155" y2="258" stroke="#6C63FF" stroke-width="0.8" stroke-opacity="0.28"/>
+
+          <!-- ── connections: hidden-1 → hidden-2 ── -->
+          <line x1="155" y1="65"  x2="255" y2="110" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.6"/>
+          <line x1="155" y1="65"  x2="255" y2="175" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.35"/>
+          <line x1="155" y1="65"  x2="255" y2="240" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.18"/>
+          <line x1="155" y1="130" x2="255" y2="110" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.4"/>
+          <line x1="155" y1="130" x2="255" y2="175" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.55"/>
+          <line x1="155" y1="130" x2="255" y2="240" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.25"/>
+          <line x1="155" y1="195" x2="255" y2="110" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.20"/>
+          <line x1="155" y1="195" x2="255" y2="175" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.45"/>
+          <line x1="155" y1="195" x2="255" y2="240" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.55"/>
+          <line x1="155" y1="258" x2="255" y2="110" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.12"/>
+          <line x1="155" y1="258" x2="255" y2="175" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.28"/>
+          <line x1="155" y1="258" x2="255" y2="240" stroke="url(#lg)" stroke-width="0.8" stroke-opacity="0.48"/>
+
+          <!-- ── connections: hidden-2 → output ── -->
+          <line x1="255" y1="110" x2="360" y2="175" stroke="#00D4AA" stroke-width="1.2" stroke-opacity="0.35"/>
+          <line x1="255" y1="175" x2="360" y2="175" stroke="#00D4AA" stroke-width="1.6" stroke-opacity="0.5"/>
+          <line x1="255" y1="240" x2="360" y2="175" stroke="#00D4AA" stroke-width="1.2" stroke-opacity="0.35"/>
+
+          <!-- ── animated data particles ── -->
+          <circle r="2.5" fill="#6C63FF">
+            <animateMotion dur="1.6s" repeatCount="indefinite" begin="0s"><mpath href="#p01"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;0" dur="1.6s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+          <circle r="2" fill="#6C63FF">
+            <animateMotion dur="1.9s" repeatCount="indefinite" begin="0.7s"><mpath href="#p02"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;0" dur="1.9s" repeatCount="indefinite" begin="0.7s"/>
+          </circle>
+          <circle r="2" fill="#8a80ff">
+            <animateMotion dur="2.1s" repeatCount="indefinite" begin="0.3s"><mpath href="#p03"/></animateMotion>
+            <animate attributeName="opacity" values="0;0.9;0" dur="2.1s" repeatCount="indefinite" begin="0.3s"/>
+          </circle>
+          <circle r="2" fill="#8a80ff">
+            <animateMotion dur="1.5s" repeatCount="indefinite" begin="0.5s"><mpath href="#p04"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+          <circle r="2" fill="#40d4b0">
+            <animateMotion dur="1.7s" repeatCount="indefinite" begin="1.1s"><mpath href="#p05"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;0" dur="1.7s" repeatCount="indefinite" begin="1.1s"/>
+          </circle>
+          <circle r="2.5" fill="#00D4AA">
+            <animateMotion dur="1.4s" repeatCount="indefinite" begin="0.9s"><mpath href="#p07"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;0" dur="1.4s" repeatCount="indefinite" begin="0.9s"/>
+          </circle>
+          <circle r="2" fill="#00D4AA">
+            <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#p08"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite" begin="1.5s"/>
+          </circle>
+          <circle r="1.5" fill="#6C63FF">
+            <animateMotion dur="2.3s" repeatCount="indefinite" begin="1.8s"><mpath href="#p10"/></animateMotion>
+            <animate attributeName="opacity" values="0;0.7;0" dur="2.3s" repeatCount="indefinite" begin="1.8s"/>
+          </circle>
+          <circle r="1.5" fill="#6C63FF">
+            <animateMotion dur="2s" repeatCount="indefinite" begin="2.2s"><mpath href="#p11"/></animateMotion>
+            <animate attributeName="opacity" values="0;0.6;0" dur="2s" repeatCount="indefinite" begin="2.2s"/>
+          </circle>
+
+          <!-- ── input nodes (layer 1) ── -->
+          <!-- I1 -->
+          <circle cx="55" cy="90" r="13" fill="rgba(108,99,255,0.08)" stroke="#6C63FF" stroke-width="1.5">
+            <animate attributeName="r" values="13;16;13" dur="3s" repeatCount="indefinite" begin="0s"/>
+            <animate attributeName="stroke-opacity" values="0.55;1;0.55" dur="3s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+          <circle cx="55" cy="90" r="5" fill="#6C63FF">
+            <animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+          <!-- I2 -->
+          <circle cx="55" cy="160" r="13" fill="rgba(108,99,255,0.08)" stroke="#6C63FF" stroke-width="1.5">
+            <animate attributeName="r" values="13;16;13" dur="3.4s" repeatCount="indefinite" begin="0.6s"/>
+            <animate attributeName="stroke-opacity" values="0.55;1;0.55" dur="3.4s" repeatCount="indefinite" begin="0.6s"/>
+          </circle>
+          <circle cx="55" cy="160" r="5" fill="#6C63FF">
+            <animate attributeName="r" values="4;6;4" dur="3.4s" repeatCount="indefinite" begin="0.6s"/>
+          </circle>
+          <!-- I3 -->
+          <circle cx="55" cy="230" r="13" fill="rgba(108,99,255,0.08)" stroke="#6C63FF" stroke-width="1.5">
+            <animate attributeName="r" values="13;16;13" dur="2.8s" repeatCount="indefinite" begin="1.1s"/>
+            <animate attributeName="stroke-opacity" values="0.55;1;0.55" dur="2.8s" repeatCount="indefinite" begin="1.1s"/>
+          </circle>
+          <circle cx="55" cy="230" r="5" fill="#6C63FF">
+            <animate attributeName="r" values="4;6;4" dur="2.8s" repeatCount="indefinite" begin="1.1s"/>
+          </circle>
+
+          <!-- ── hidden layer 1 (layer 2) ── -->
+          <!-- H1a -->
+          <circle cx="155" cy="65" r="10" fill="rgba(138,127,255,0.1)" stroke="#8a80ff" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="2.6s" repeatCount="indefinite" begin="0.2s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite" begin="0.2s"/>
+          </circle>
+          <circle cx="155" cy="65" r="4" fill="#8a80ff">
+            <animate attributeName="r" values="3;5;3" dur="2.6s" repeatCount="indefinite" begin="0.2s"/>
+          </circle>
+          <!-- H1b -->
+          <circle cx="155" cy="130" r="10" fill="rgba(138,127,255,0.1)" stroke="#8a80ff" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="3.1s" repeatCount="indefinite" begin="0.8s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.1s" repeatCount="indefinite" begin="0.8s"/>
+          </circle>
+          <circle cx="155" cy="130" r="4" fill="#8a80ff">
+            <animate attributeName="r" values="3;5;3" dur="3.1s" repeatCount="indefinite" begin="0.8s"/>
+          </circle>
+          <!-- H1c -->
+          <circle cx="155" cy="195" r="10" fill="rgba(138,127,255,0.1)" stroke="#8a80ff" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="2.9s" repeatCount="indefinite" begin="1.3s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.9s" repeatCount="indefinite" begin="1.3s"/>
+          </circle>
+          <circle cx="155" cy="195" r="4" fill="#8a80ff">
+            <animate attributeName="r" values="3;5;3" dur="2.9s" repeatCount="indefinite" begin="1.3s"/>
+          </circle>
+          <!-- H1d -->
+          <circle cx="155" cy="258" r="10" fill="rgba(138,127,255,0.1)" stroke="#8a80ff" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="3.5s" repeatCount="indefinite" begin="0.4s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite" begin="0.4s"/>
+          </circle>
+          <circle cx="155" cy="258" r="4" fill="#8a80ff">
+            <animate attributeName="r" values="3;5;3" dur="3.5s" repeatCount="indefinite" begin="0.4s"/>
+          </circle>
+
+          <!-- ── hidden layer 2 (layer 3) ── -->
+          <!-- H2a -->
+          <circle cx="255" cy="110" r="10" fill="rgba(0,212,170,0.1)" stroke="#00D4AA" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+          <circle cx="255" cy="110" r="4" fill="#00D4AA">
+            <animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+          <!-- H2b -->
+          <circle cx="255" cy="175" r="10" fill="rgba(0,212,170,0.1)" stroke="#00D4AA" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="3.2s" repeatCount="indefinite" begin="1.0s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="3.2s" repeatCount="indefinite" begin="1.0s"/>
+          </circle>
+          <circle cx="255" cy="175" r="4" fill="#00D4AA">
+            <animate attributeName="r" values="3;5;3" dur="3.2s" repeatCount="indefinite" begin="1.0s"/>
+          </circle>
+          <!-- H2c -->
+          <circle cx="255" cy="240" r="10" fill="rgba(0,212,170,0.1)" stroke="#00D4AA" stroke-width="1.5">
+            <animate attributeName="r" values="10;13;10" dur="2.7s" repeatCount="indefinite" begin="0.75s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.7s" repeatCount="indefinite" begin="0.75s"/>
+          </circle>
+          <circle cx="255" cy="240" r="4" fill="#00D4AA">
+            <animate attributeName="r" values="3;5;3" dur="2.7s" repeatCount="indefinite" begin="0.75s"/>
+          </circle>
+
+          <!-- ── output node ── -->
+          <circle cx="360" cy="175" r="17" fill="rgba(0,212,170,0.1)" stroke="#00D4AA" stroke-width="2">
+            <animate attributeName="r" values="17;21;17" dur="2.5s" repeatCount="indefinite" begin="1.4s"/>
+            <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite" begin="1.4s"/>
+          </circle>
+          <circle cx="360" cy="175" r="7" fill="#00D4AA">
+            <animate attributeName="r" values="6;9;6" dur="2.5s" repeatCount="indefinite" begin="1.4s"/>
+          </circle>
+
+          <!-- labels -->
+          <text x="55"  y="298" text-anchor="middle" fill="#8888AA" font-family="monospace" font-size="8.5" letter-spacing="1.5">INPUT</text>
+          <text x="155" y="298" text-anchor="middle" fill="#8888AA" font-family="monospace" font-size="8.5" letter-spacing="1.5">HIDDEN</text>
+          <text x="255" y="298" text-anchor="middle" fill="#8888AA" font-family="monospace" font-size="8.5" letter-spacing="1.5">HIDDEN</text>
+          <text x="360" y="208" text-anchor="middle" fill="#00D4AA" font-family="monospace" font-size="8.5" letter-spacing="1.5">OUTPUT</text>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="scroll-ind" aria-hidden="true">
+    <span>SCROLL</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- =============================================
+     CREDIBILITY STRIP
+     ============================================= -->
+<section id="credibility">
+  <div class="cred-inner">
+    <p class="sect-label fade-up">Trusted By &amp; Trained At</p>
+
+    <div class="logo-strip">
+      <span class="logo-pill fade-up d1">IIT Delhi</span>
+      <span class="logo-pill fade-up d2">IIM Calcutta</span>
+      <span class="logo-pill fade-up d3">Walmart</span>
+      <span class="logo-pill fade-up d4">BCG</span>
+      <span class="logo-pill fade-up d5">eBay</span>
+      <span class="logo-pill fade-up d6">Govt. of India</span>
+    </div>
+
+    <div class="impact-row">
+      <div class="impact-item fade-up d1">
+        <div class="impact-num" data-target="9" data-suffix="x">0x</div>
+        <div class="impact-desc">Lead Conversion Lift at BCG</div>
+      </div>
+      <div class="impact-item fade-up d2">
+        <div class="impact-num" data-target="30" data-suffix="%">0%</div>
+        <div class="impact-desc">Model Performance Improvement</div>
+      </div>
+      <div class="impact-item fade-up d3">
+        <div class="impact-num" data-target="21" data-suffix="%">0%</div>
+        <div class="impact-desc">Detection Rate Increase at eBay</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     ABOUT / ORIGIN STORY
+     ============================================= -->
+<section id="about">
+  <div class="about-inner">
+    <p class="sect-label fade-up">Origin Story</p>
+    <h2 class="sect-heading fade-up d1">From Civil Engineer<br>to AI Builder.</h2>
+    <p class="sect-sub fade-up d2">// a non-linear path is just a richer model</p>
+
+    <div class="timeline-outer">
+      <div class="timeline-track">
+        <div class="timeline-fill" id="tl-fill"></div>
+      </div>
+
+      <div class="tl-item fade-up d1">
+        <p class="tl-year">2013 &mdash; IIT Delhi</p>
+        <h3 class="tl-title">The Foundation</h3>
+        <p class="tl-body">Started as a Civil Engineer at IIT Delhi. Led India's largest tech fest. Captained the Indoor Sports Club. Built things before I knew what building meant.</p>
+      </div>
+
+      <div class="tl-item fade-up d2">
+        <p class="tl-year">2017 &mdash; Guhaar</p>
+        <h3 class="tl-title">First Company</h3>
+        <p class="tl-body">Founded Guhaar — a media consulting firm. 50,000+ community members across 7 states. Partnered with Seoul Youth Hub as one of 10 global firms on Digital Tech &amp; Voices.</p>
+      </div>
+
+      <div class="tl-item fade-up d3">
+        <p class="tl-year">2020 &mdash; IIM Calcutta</p>
+        <h3 class="tl-title">All In on Data</h3>
+        <p class="tl-body">IIM Calcutta (with IIT KGP + ISI Kolkata). Ranked 3rd in batch. Top 126 globally in the International Data Analytics Olympiad. Chose data over everything.</p>
+      </div>
+
+      <div class="tl-item fade-up d4">
+        <p class="tl-year">2022 &mdash; Now</p>
+        <h3 class="tl-title">BCG &rarr; Walmart</h3>
+        <p class="tl-body">BCG → Walmart. From national policy (NITI Aayog, Prime Minister validation) to personalization at e-commerce scale. Now building autonomously with AI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     WORK — THE BUILD LOG
+     ============================================= -->
+<section id="work">
+  <div class="work-inner">
+    <p class="sect-label fade-up">The Build Log</p>
+    <h2 class="sect-heading fade-up d1">Selected Projects,<br>Ordered by Impact.</h2>
+    <p class="sect-sub fade-up d2">// five builds that moved numbers</p>
+
+    <!-- Project 1 -->
+    <div class="proj-card odd fade-left">
+      <div class="proj-type">[AGENTIC AI]</div>
+      <h3 class="proj-title">End-to-End Event Creation Agent</h3>
+      <span class="proj-badge">@ Walmart</span>
+      <p class="proj-desc">An AI agent that takes a single brief about a shopping event and autonomously handles item curation, assortment sorting, and screen generation — building complete e-commerce experiences end to end.</p>
+      <div class="chip-row">
+        <span class="chip chip-patent">🏆 Patent Filed</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">LLM Agents</span>
+        <span class="tech-tag">Agentic Workflows</span>
+        <span class="tech-tag">E-commerce</span>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="proj-card even fade-right">
+      <div class="proj-type">[PERSONALIZATION]</div>
+      <h3 class="proj-title">Self-Improving Attribute Schema</h3>
+      <span class="proj-badge">@ Walmart &middot; Patent</span>
+      <p class="proj-desc">A system that uses model-driven importance scores and LLM refinement to continuously improve product attribute schemas — making recommendations more relevant without human intervention.</p>
+      <div class="chip-row">
+        <span class="chip chip-patent">🏆 Patent Filed</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-tag">LLMs</span>
+        <span class="tech-tag">ML</span>
+        <span class="tech-tag">Attribute Modeling</span>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="proj-card odd fade-left">
+      <div class="proj-type">[CIVIC TECH]</div>
+      <h3 class="proj-title">CharaGram — Multilingual Civic Platform</h3>
+      <span class="proj-badge">Vibe-Coded &middot; Solo Build &middot; Live</span>
+      <p class="proj-desc">A civic accountability platform giving citizens a structured space to raise local concerns and hold elected representatives accountable — anchored to their constituency. Built solo using AI-assisted coding.</p>
+      <div class="chip-row">
+        <span class="chip chip-live">🌐 Live</span>
+        <span class="chip chip-vibe">⚡ Vibe-Coded · Built Solo</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-tag">Web</span>
+        <span class="tech-tag">Multilingual NLP</span>
+        <span class="tech-tag">Civic Tech</span>
+      </div>
+      <a href="https://www.charchagram.com" target="_blank" rel="noopener noreferrer" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        charchagram.com
+      </a>
+      <a href="https://github.com/saurav822/charchagram" target="_blank" rel="noopener noreferrer" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        github/charchagram
+      </a>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="proj-card even fade-right">
+      <div class="proj-type">[FINTECH]</div>
+      <h3 class="proj-title">AutoTrader — Multi-Agent Trading System</h3>
+      <span class="proj-badge">Vibe-Coded &middot; Open Source &middot; Solo Build</span>
+      <p class="proj-desc">A team of specialized LLM agents — market analyst, news analyst, social sentiment analyst, fundamentals analyst — that debates each trade. A risk manager assigns confidence scores before execution through the INDstocks broker API.</p>
+      <div class="chip-row">
+        <span class="chip chip-multi">⚡ Multi-Agent</span>
+        <span class="chip chip-vibe">🔨 Vibe-Coded · Built Solo</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-tag">Multi-Agent AI</span>
+        <span class="tech-tag">LLMs</span>
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Broker API</span>
+      </div>
+      <a href="https://github.com/saurav822" target="_blank" rel="noopener noreferrer" class="proj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        github.com/saurav822
+      </a>
+    </div>
+
+    <!-- Project 5 -->
+    <div class="proj-card odd fade-left">
+      <div class="proj-type">[ML SYSTEM]</div>
+      <h3 class="proj-title">Cross-Sell Recommendation Engine</h3>
+      <span class="proj-badge">@ BCG &middot; Global Software Firm</span>
+      <p class="proj-desc">Optimal cross-sell and up-sell model for software products, complemented by an LLM agent that generates personalized sales pitch talking points for executives.</p>
+      <div class="chip-row">
+        <span class="chip chip-impact">9x Lead Conversion</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-tag">ML</span>
+        <span class="tech-tag">LLMs</span>
+        <span class="tech-tag">Recommendation Systems</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     LAB — MORE FROM THE LAB
+     ============================================= -->
+<section id="lab">
+  <div class="lab-inner">
+    <p class="sect-label fade-up">More From The Lab</p>
+    <h2 class="sect-heading fade-up d1">Supporting Work</h2>
+    <p class="sect-sub fade-up d2">// the projects that didn't make the front page, but shaped the thinking</p>
+
+    <div class="lab-grid">
+      <div class="lab-card fade-up d1">
+        <h3 class="lab-title">Credit Risk Modelling</h3>
+        <p class="lab-desc">Bionic underwriting model for Indian NBFC two-wheeler loans. Outperformed existing model by 30% using Banking + Bureau + Geo data.</p>
+        <span class="lab-tag">BCG &middot; Finance</span>
+      </div>
+
+      <div class="lab-card fade-up d2">
+        <h3 class="lab-title">NITI Aayog GenAI Analysis</h3>
+        <p class="lab-desc">Analyzed nationwide survey responses using GenAI to synthesize insights for the Viksit Bharat@2047 national policy framework.</p>
+        <span class="lab-tag">BCG &middot; Public Sector &middot; GenAI</span>
+      </div>
+
+      <div class="lab-card fade-up d3">
+        <h3 class="lab-title">eBay Policy Violation Detection</h3>
+        <p class="lab-desc">BERT-based transformer achieving 57% improvement over baseline. 21% increase in detection rate for policy violators.</p>
+        <span class="lab-tag">eBay &middot; NLP &middot; Deep Learning</span>
+      </div>
+
+      <div class="lab-card fade-up d4">
+        <h3 class="lab-title">Agriculture Database (GoI)</h3>
+        <p class="lab-desc">Developed SOPs for national farmer-land database. Pilot across 4 states. Received validation from the Prime Minister.</p>
+        <span class="lab-tag">BCG &middot; Govt. of India</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SKILLS & STACK
+     ============================================= -->
+<section id="skills">
+  <div class="skills-inner">
+    <p class="sect-label fade-up">How I Build</p>
+    <h2 class="sect-heading fade-up d1">Skills &amp; Stack</h2>
+    <p class="sect-sub fade-up d2">// proficiency is measured in shipped products, not certifications</p>
+
+    <div class="skills-grid">
+      <!-- Skill bars -->
+      <div>
+        <p class="skills-col-label">Core Competencies</p>
+
+        <div class="skill-item fade-up d1">
+          <div class="skill-hdr">
+            <span class="skill-name">Agentic AI / LLM Systems</span>
+            <span class="skill-pct">95%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="95"></div></div>
+        </div>
+
+        <div class="skill-item fade-up d2">
+          <div class="skill-hdr">
+            <span class="skill-name">Machine Learning &amp; MLOps</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="90"></div></div>
+        </div>
+
+        <div class="skill-item fade-up d3">
+          <div class="skill-hdr">
+            <span class="skill-name">Deep Learning (PyTorch)</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="85"></div></div>
+        </div>
+
+        <div class="skill-item fade-up d4">
+          <div class="skill-hdr">
+            <span class="skill-name">NLP &amp; Transformers</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="85"></div></div>
+        </div>
+
+        <div class="skill-item fade-up d5">
+          <div class="skill-hdr">
+            <span class="skill-name">Data Engineering (SQL/Python)</span>
+            <span class="skill-pct">95%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="95"></div></div>
+        </div>
+
+        <div class="skill-item fade-up d6">
+          <div class="skill-hdr">
+            <span class="skill-name">GenAI Product Development</span>
+            <span class="skill-pct">95%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="95"></div></div>
+        </div>
+      </div>
+
+      <!-- Tool pills -->
+      <div>
+        <p class="skills-col-label">Tools &amp; Frameworks</p>
+        <div class="tools-cloud fade-up d1">
+          <span class="tool-pill">Python</span>
+          <span class="tool-pill">PyTorch</span>
+          <span class="tool-pill">SQL</span>
+          <span class="tool-pill">Tableau</span>
+          <span class="tool-pill">R</span>
+          <span class="tool-pill">LangChain</span>
+          <span class="tool-pill">Cursor</span>
+          <span class="tool-pill">Agentic Workflows</span>
+          <span class="tool-pill">BERT</span>
+          <span class="tool-pill">Boosting / Bagging</span>
+          <span class="tool-pill">Autoencoders</span>
+          <span class="tool-pill">Time Series</span>
+          <span class="tool-pill">Computer Vision</span>
+          <span class="tool-pill">LLM Prompting</span>
+          <span class="tool-pill">Spark</span>
+          <span class="tool-pill">AWS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-quote fade-up d2">
+      <p>"I don't just build models. I ship products that change conversion rates, inform national policy, and hold governments accountable."</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     CONTACT CTA
+     ============================================= -->
+<section id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-h fade-up">Let's Build Something</h2>
+    <p class="contact-sub fade-up d1">VibeCon India 2026 &middot; April 16&ndash;17 &middot; Bangalore</p>
+
+    <div class="contact-cards">
+      <a href="mailto:nba.saurav@gmail.com" class="contact-card fade-up d1">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <span class="contact-type">Email</span>
+        <span class="contact-val">nba.saurav@gmail.com</span>
+      </a>
+
+      <a href="https://linkedin.com/in/sauravrajput" target="_blank" rel="noopener noreferrer" class="contact-card fade-up d2">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </div>
+        <span class="contact-type">LinkedIn</span>
+        <span class="contact-val">linkedin.com/in/sauravrajput</span>
+      </a>
+
+      <a href="https://github.com/saurav822" target="_blank" rel="noopener noreferrer" class="contact-card fade-up d3">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </div>
+        <span class="contact-type">GitHub</span>
+        <span class="contact-val">github.com/saurav822</span>
+      </a>
+    </div>
+
+    <p class="contact-note fade-up d4">IIT Delhi '17 &middot; IIM Calcutta '22 &middot; Currently @ Walmart, Bangalore</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>&copy; 2026 Saurav Rajput</span>
+  <span>Built with taste. Shipped with intent.</span>
+</footer>
+
+<script>
+  /* =============================================
+     NAV — frosted glass on scroll
+     ============================================= */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* =============================================
+     HAMBURGER MENU
+     ============================================= */
+  function toggleMenu() {
+    const hbg  = document.getElementById('hbg');
+    const menu = document.getElementById('mob-menu');
+    const open = menu.classList.toggle('open');
+    hbg.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('hbg').classList.remove('open');
+    document.getElementById('mob-menu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* =============================================
+     TYPEWRITER
+     ============================================= */
+  (function() {
+    const phrases = [
+      'Senior Data Scientist @ Walmart',
+      'AI/ML Builder \u00B7 IIT Delhi \u00B7 IIM Calcutta',
+      'Turning Models into Products Since 2017'
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const el = document.getElementById('tw');
+
+    function tick() {
+      const phrase = phrases[pi];
+      if (deleting) {
+        el.textContent = phrase.slice(0, ci - 1);
+        ci--;
+      } else {
+        el.textContent = phrase.slice(0, ci + 1);
+        ci++;
+      }
+
+      let delay = deleting ? 38 : 68;
+      if (!deleting && ci === phrase.length) {
+        delay = 2200;
+        deleting = true;
+      } else if (deleting && ci === 0) {
+        deleting = false;
+        pi = (pi + 1) % phrases.length;
+        delay = 420;
+      }
+      setTimeout(tick, delay);
+    }
+    setTimeout(tick, 1600);
+  })();
+
+  /* =============================================
+     INTERSECTION OBSERVER — generic fade
+     ============================================= */
+  const fadeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.fade-up, .fade-left, .fade-right').forEach(el => fadeObs.observe(el));
+
+  /* =============================================
+     TIMELINE FILL — draws downward on scroll
+     ============================================= */
+  (function() {
+    const fill = document.getElementById('tl-fill');
+    if (!fill) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          fill.classList.add('visible');
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.05 });
+    obs.observe(fill.closest('.timeline-outer'));
+  })();
+
+  /* =============================================
+     COUNT-UP — trigger on scroll
+     ============================================= */
+  (function() {
+    function countUp(el, target, suffix) {
+      const dur = 1800;
+      const fps = 60;
+      const steps = dur / (1000 / fps);
+      const inc = target / steps;
+      let cur = 0;
+      const id = setInterval(() => {
+        cur += inc;
+        if (cur >= target) { cur = target; clearInterval(id); }
+        el.textContent = Math.floor(cur) + suffix;
+      }, 1000 / fps);
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.done) {
+          e.target.dataset.done = '1';
+          countUp(e.target, +e.target.dataset.target, e.target.dataset.suffix || '');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.impact-num[data-target]').forEach(el => obs.observe(el));
+  })();
+
+  /* =============================================
+     SKILL BARS — fill on scroll into view
+     ============================================= */
+  (function() {
+    const section = document.getElementById('skills');
+    if (!section) return;
+    let fired = false;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !fired) {
+          fired = true;
+          section.querySelectorAll('.bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.w + '%';
+          });
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(section);
+  })();
+</script>
+</body>
+</html>
